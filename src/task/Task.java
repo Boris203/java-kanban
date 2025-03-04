@@ -1,51 +1,63 @@
 package task;
-
 import taskManager.Status;
 
+import java.util.Objects;
+
 public class Task {
-    protected Integer id;
-    protected String taskName;
-    protected String description;
-    protected Status status;
 
-    public Task(String taskName, String description, Status status) {
-        this.taskName = taskName;
-        this.description = description;
-        this.status = status;
-        this.id = null;
-    }
+    protected static Integer  idToTask = 1;
+    protected String nameToTask;
+    protected Status statusToTask;
 
-    public Task(Integer id, String taskName, String description, Status status) {
-        this.id = id;
-        this.taskName = taskName;
-        this.description = description;
-        this.status = status;
+
+    public Task(String nameToTask, Status statusToTask) {
+        this.nameToTask = nameToTask;
+        this.statusToTask = statusToTask;
+        idToTask++;
     }
 
 
-    public Integer getId() {
-        return id;
+    public Integer getIdToTask() {
+        return idToTask;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getNameToTask() {
+        return nameToTask;
     }
 
-    public Status getStatus() {
-        return status;
+    public void setNameToTask(String nameToTask) {
+        this.nameToTask = nameToTask;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public Status getStatusToTask() {
+        return statusToTask;
+    }
+
+    public void setStatusToTask(Status statusToTask) {
+        this.statusToTask = statusToTask;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(idToTask, nameToTask, statusToTask);
+        result = 31 * result;
+        return result;
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "id=" + id +
-                ", taskName='" + taskName + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
+                "idToTask=" + idToTask + '\'' +
+                ", nameToTask='" + nameToTask + '\'' +
+                ", statusToTask=" + statusToTask + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(nameToTask, task.nameToTask) && statusToTask == task.statusToTask;
     }
 }
