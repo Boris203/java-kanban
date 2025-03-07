@@ -1,15 +1,11 @@
 package task;
 
-import taskManager.Status;
-
-import java.util.ArrayList;
-
 public class SubTask extends Task {
     private Integer epicsIdForSubTask;
 
-    public SubTask(String nameToTask, Status statusToTask, Integer epicsIdForSudTask) {
-        super(nameToTask, statusToTask);
-        this.epicsIdForSubTask = epicsIdForSudTask;
+    public SubTask(String nameToTask, String descriptionToTask, Status statusToTask, Integer epicsIdForSubTask) {
+        super(nameToTask, descriptionToTask, statusToTask);
+        this.epicsIdForSubTask = epicsIdForSubTask;
     }
 
     public Integer getEpicsIdForSubTask() {

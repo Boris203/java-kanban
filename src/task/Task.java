@@ -1,24 +1,19 @@
 package task;
-import taskManager.Status;
 
 import java.util.Objects;
 
 public class Task {
 
-    protected static Integer  idToTask = 1;
+    // protected static Integer  idToTask = 1;
     protected String nameToTask;
+    protected String descriptionToTask;
     protected Status statusToTask;
 
 
-    public Task(String nameToTask, Status statusToTask) {
+    public Task(String nameToTask, String descriptionToTask, Status statusToTask) {
         this.nameToTask = nameToTask;
+        this.descriptionToTask = descriptionToTask;
         this.statusToTask = statusToTask;
-        idToTask++;
-    }
-
-
-    public Integer getIdToTask() {
-        return idToTask;
     }
 
     public String getNameToTask() {
@@ -37,20 +32,12 @@ public class Task {
         this.statusToTask = statusToTask;
     }
 
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(idToTask, nameToTask, statusToTask);
-        result = 31 * result;
-        return result;
+    public String getDescriptionToTask() {
+        return descriptionToTask;
     }
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "idToTask=" + idToTask + '\'' +
-                ", nameToTask='" + nameToTask + '\'' +
-                ", statusToTask=" + statusToTask + '\'' +
-                '}';
+    public void setDescriptionToTask(String descriptionToTask) {
+        this.descriptionToTask = descriptionToTask;
     }
 
     @Override
@@ -58,6 +45,22 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(nameToTask, task.nameToTask) && statusToTask == task.statusToTask;
+        return Objects.equals(nameToTask, task.nameToTask) &&
+               Objects.equals(descriptionToTask, task.descriptionToTask) &&
+               statusToTask == task.statusToTask;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * Objects.hash(nameToTask, descriptionToTask, statusToTask);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "nameToTask='" + nameToTask + '\n' +
+                ", descriptionToTask='" + descriptionToTask + '\n' +
+                ", statusToTask=" + statusToTask + '\n' +
+                '}';
     }
 }
