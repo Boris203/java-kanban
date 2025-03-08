@@ -41,8 +41,6 @@ public class TaskManager {
     //b. Удаление всех задач.
     public void removeAllTask() {
         idToTask.clear();
-        idToEpics.clear();
-        idToSubTask.clear();
     }
 
     public void removeAllEpics() {
@@ -51,14 +49,9 @@ public class TaskManager {
     }
 
     public void removeAllSubTask() {
-        ArrayList<Integer> epicIdForSubTasks = new ArrayList<>();
-        for (SubTask subTask : idToSubTask.values()) {
-            epicIdForSubTasks.add(subTask.getEpicsIdForSubTask());
-        }
-        for (Integer epicIdForSubTask : epicIdForSubTasks) {
-            idToEpics.get(epicIdForSubTask).clearSubTaskIdToEpics();
-            Epic epic = idToEpics.get(epicIdForSubTask);
-            epic.setStatusToTask(Status.NEW);
+        idToSubTask.clear();
+        for(Epic epic : idToEpics.values()) {
+            epic.clearSubTaskIdToEpics();
         }
     }
 
@@ -68,69 +61,60 @@ public class TaskManager {
     }
 
     public Epic epicForId(int id) {
-        if (existsInEpics(id)) {
-            return idToEpics.get(id);
-        } else {
-            return null;
-        }
+        return idToEpics.get(id);
     }
 
-    public SubTask SubTaskForId(int id) {
-        if (existsInSubTasks(id)) {
+    public SubTask subTaskForId(int id) {
             return idToSubTask.get(id);
-        } else {
-            return null;
-        }
     }
 
     //d. Создание. Сам объект должен передаваться в качестве параметра.
     public void createTask(Task task) {
         Integer id = taskId;
         idToTask.put(id, task);
+        task.setTaskId(id);
         taskId++;
     }
 
     public void createEpic(Epic epic) {
         Integer id = taskId;
         idToEpics.put(id, epic);
+        epic.setTaskId(id);
         taskId++;
     }
 
     public void createSubTask(SubTask subTask) {
         Integer id = taskId;
         idToSubTask.put(id, subTask);
+        subTask.setTaskId(id);
         Integer epicIdForSubtask = subTask.getEpicsIdForSubTask();
+        Integer EpicId =  idToSubTask.get(id).getEpicsIdForSubTask();
         Epic epicIdForST =  idToEpics.get(epicIdForSubtask);
         epicIdForST.addSubTasksId(id);
-        epicIdForST.toString();
+        updateEpicStatus(EpicId);
         taskId++;
     }
 
     //e. Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра
     public void updateTask(Task task) {
-        for (Integer iter = 0; iter < idToTask.size(); iter++) {
-            if (task.equals(idToTask.get(iter))) {
-                idToTask.put(iter, task);
-            }
+        Integer taskId = task.getTaskId();
+        if (idToTask.containsKey(taskId)) {
+            idToTask.put(taskId, task);
         }
     }
 
     public void updateEpic(Epic epic) {
-        for (Integer iter = 0; iter < idToEpics.size(); iter++) {
-            if (epic.equals(idToEpics.get(iter))) {
-                idToEpics.put(iter, epic);
-            }
+        Integer epicId = epic.getTaskId();
+        if (idToTask.containsKey(epicId)) {
+            idToTask.put(epicId, epic);
         }
     }
 
     public void updateSubTask(SubTask subTask) {
-        for (Integer iter = 0; iter < idToSubTask.size(); iter++) {
-            if (subTask.equals(idToSubTask.get(iter))) {
-                idToSubTask.put(iter, subTask);
-                Integer epicIdForSubTask = idToSubTask.get(iter).getEpicsIdForSubTask();
-                updateEpicStatus(epicIdForSubTask);
-            }
-
+        Integer subTaskId = subTask.getTaskId();
+        if (idToTask.containsKey(subTaskId)) {
+            idToTask.put(subTaskId, subTask);
+            updateEpicStatus(subTask.getEpicsIdForSubTask());
         }
     }
 
@@ -141,6 +125,10 @@ public class TaskManager {
 
 
     public void deleteEpic(Integer id) {
+        Epic epic = idToEpics.get(id);
+        if (epic == null) {
+            return;
+        }
         for (Integer idSubTask : idToEpics.get(id).getSubTasksId()) {
             idToSubTask.remove(idSubTask);
         }
@@ -149,20 +137,25 @@ public class TaskManager {
     }
 
     public void deleteSubTask(Integer id) {
+        Integer EpicId =  idToSubTask.get(id).getEpicsIdForSubTask();
         if (existsInSubTasks(id)) {
             idToSubTask.remove(id);
+            idToEpics.get(EpicId).removeSubTaskIdToEpics(id);
         }
+        updateEpicStatus(EpicId);
     }
 
 
     // Получение списка всех подзадач определённого эпика.
     public ArrayList<SubTask> tasksOfEpic(Integer idOfEpic) {
         ArrayList<SubTask> subTask = new ArrayList<>();
-        if (existsInEpics(idOfEpic)) {
-            ArrayList<Integer> SubTasksOfEpics = idToEpics.get(idOfEpic).getSubTasksId();
-            for (Integer subTasks : SubTasksOfEpics) {
-                subTask.add(idToSubTask.get(subTasks));
-            }
+        Epic epic = idToEpics.get(idOfEpic);
+        if (epic == null) {
+            return subTask;
+        }
+        ArrayList<Integer> SubTasksOfEpics = idToEpics.get(idOfEpic).getSubTasksId();
+        for (Integer subTasks : SubTasksOfEpics) {
+            subTask.add(idToSubTask.get(subTasks));
         }
         return subTask;
     }

@@ -69,7 +69,7 @@ public class Main {
         System.out.println("c. Получение по идентификатору.");
         System.out.println("Вывод на экран. Задача, id 1 - " + taskManager.taskForId(1));
         System.out.println("Вывод на экран. эпик, id 5 - " + taskManager.epicForId(5));
-        System.out.println("Вывод на экран. Подзадача, id 8 - " + taskManager.SubTaskForId(8));
+        System.out.println("Вывод на экран. Подзадача, id 8 - " + taskManager.subTaskForId(8));
 
 
         System.out.println("Получение списка всех подзадач определённого эпика.");

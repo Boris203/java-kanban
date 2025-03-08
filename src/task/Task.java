@@ -8,7 +8,7 @@ public class Task {
     protected String nameToTask;
     protected String descriptionToTask;
     protected Status statusToTask;
-
+    protected Integer idToTask;
 
     public Task(String nameToTask, String descriptionToTask, Status statusToTask) {
         this.nameToTask = nameToTask;
@@ -40,6 +40,14 @@ public class Task {
         this.descriptionToTask = descriptionToTask;
     }
 
+    public Integer getTaskId() {
+        return idToTask;
+    }
+
+    public void setTaskId(Integer taskId) {
+        this.idToTask= taskId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,20 +55,22 @@ public class Task {
         Task task = (Task) o;
         return Objects.equals(nameToTask, task.nameToTask) &&
                Objects.equals(descriptionToTask, task.descriptionToTask) &&
-               statusToTask == task.statusToTask;
+               statusToTask == task.statusToTask &&
+               Objects.equals(idToTask, task.idToTask);
     }
 
     @Override
     public int hashCode() {
-        return 31 * Objects.hash(nameToTask, descriptionToTask, statusToTask);
+        return Objects.hash(nameToTask, descriptionToTask, statusToTask, idToTask);
     }
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "Task{" + '\n' +
                 "nameToTask='" + nameToTask + '\n' +
                 ", descriptionToTask='" + descriptionToTask + '\n' +
                 ", statusToTask=" + statusToTask + '\n' +
+                ", idToTask=" + idToTask + '\n' +
                 '}';
     }
 }
