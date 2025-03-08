@@ -43,21 +43,21 @@ public class Main {
         taskManager.createTask(task2);
         Task task3 = new Task("Задача 3", "описание задачи", Status.DONE);
         taskManager.createTask(task3);
-        Epic epic5 = new Epic("Epic 1", "описание задачи", Status.NEW);
+        Epic epic4 = new Epic("Epic 1", "описание задачи", Status.NEW);
+        taskManager.createEpic(epic4);
+        Epic epic5 = new Epic("Epic 2", "описание задачи", Status.IN_PROGRESS);
         taskManager.createEpic(epic5);
-        Epic epic6 = new Epic("Epic 2", "описание задачи", Status.IN_PROGRESS);
+        Epic epic6 = new Epic("Epic 3", "описание задачи", Status.DONE);
         taskManager.createEpic(epic6);
-        Epic epic7 = new Epic("Epic 3", "описание задачи", Status.DONE);
-        taskManager.createEpic(epic7);
-        SubTask SubTask8 = new SubTask("Подзадача 1", "описание задачи", Status.NEW,
+        SubTask SubTask7 = new SubTask("Подзадача 1", "описание задачи", Status.NEW,
                 6);
-        taskManager.createSubTask(SubTask8);
-        SubTask SubTask9 = new SubTask("Подзадача 2", "описание задачи", Status.NEW,
+        taskManager.createSubTask(SubTask7);
+        SubTask SubTask8 = new SubTask("Подзадача 2", "описание задачи", Status.NEW,
                 5);
-        taskManager.createSubTask(SubTask9);
-        SubTask SubTask10 = new SubTask("Подзадача 3", "описание задачи", Status.DONE,
+        taskManager.createSubTask(SubTask8);
+        SubTask SubTask9 = new SubTask("Подзадача 3", "описание задачи", Status.DONE,
                 4);
-        taskManager.createSubTask(SubTask10);
+        taskManager.createSubTask(SubTask9);
 
 
         System.out.println("Список всех задач:");
@@ -87,9 +87,9 @@ public class Main {
         SubTask8 = new SubTask("Подзадача 8.2", "новое описание задачи",
                 Status.IN_PROGRESS, 5);
         taskManager.updateSubTask(SubTask8);
-        SubTask10 = new SubTask("Подзадача 10.2", "новое описание задачи",
+        SubTask9 = new SubTask("Подзадача 10.2", "новое описание задачи",
                 Status.IN_PROGRESS, 7);
-        taskManager.updateSubTask(SubTask10);
+        taskManager.updateSubTask(SubTask9);
 
         System.out.println("Список всех задач:");
         System.out.println(taskManager.getTasks().toString() + '\n' +
