@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Task {
 
-    // protected static Integer  idToTask = 1;
     protected String nameToTask;
     protected String descriptionToTask;
     protected Status statusToTask;
